@@ -16,6 +16,7 @@ namespace PlayerCode
             float x;
             float y;
             float raduis = 10;
+            int health = 100;
             sf::Color color = sf::Color::Red;
 			sf::Vector2f position;
             void draw(sf::RenderWindow* window)

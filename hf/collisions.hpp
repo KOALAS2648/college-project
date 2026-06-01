@@ -1,15 +1,16 @@
 #pragma once
-#include <iostream>
 #include <cmath>
 #include <SFML/Graphics.hpp>
-#include <algorithm>
 #include "P.hpp"
+#include "Bullet.hpp"
+#include "box.hpp"
 using namespace PlayerCode;
 using namespace std;
+using namespace B;
 
 namespace Collision
 {
-	bool isOutside(Player* obj, sf::RenderWindow* s)
+	bool isPlayerOutside(Player* obj, sf::RenderWindow* s)
 	{
 		sf::RenderWindow &screen = *s;
 		Player &check = *obj;
@@ -35,6 +36,19 @@ namespace Collision
 		if(check.y-check.raduis < 0)
 		{
 			check.y = check.raduis;
+			return true;
+		}
+		return false;
+	}
+	bool isBulletOutside(BulletClass* obj, sf::RenderWindow* s)
+	{
+		sf::RenderWindow &screen = *s;
+		BulletClass &check = *obj;
+		float windowWidth = screen.getSize().x;
+		float windowHeight = screen.getSize().y;
+		if(check.x + check.raduis > windowWidth || check.x - check.raduis < 0 ||  check.y + check.raduis > windowHeight || check.y-check.raduis < 0)
+		{
+			
 			return true;
 		}
 		return false;

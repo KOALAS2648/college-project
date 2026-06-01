@@ -1,11 +1,8 @@
 #pragma once
 
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include <sstream>
-#include <vector>
-#include <string>
+#include "collisions.hpp"
 
 namespace B
 {
@@ -16,7 +13,8 @@ namespace B
             float y=0;
             float raduis = 10;
             float moveAngle;
-            int speed = 5;
+            int speed = 15;
+            bool show=true;
             sf::Color color = sf::Color::Yellow;
 			sf::Vector2f position={0,0};
             void draw(sf::RenderWindow* window)
@@ -26,15 +24,16 @@ namespace B
                 sf::CircleShape circle1(raduis);
                 circle1.setFillColor(color);
                 circle1.setOrigin(raduis, raduis);
-                move();
+                
                 circle1.setPosition(x,y);
                 window->draw(circle1);
 				position = {x, y};
             }
             void move()
             {
-                x += speed*sin(moveAngle);
-                y += speed*cos(moveAngle);    
+                x += speed*cos(moveAngle);
+                y += speed*sin(moveAngle);
+                    
             }
     };
 }

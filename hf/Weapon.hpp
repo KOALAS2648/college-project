@@ -15,12 +15,14 @@ namespace W
         public:
             float x;
             float y;
-            int ammo=150;
-            const int MAXAMMO = 150;
+            int ammo=50;
+
+            const int MAXAMMO = 50;
             int magAmmo = 30;
             float rotation;
             float height = 10;
             float width =40;
+            int diffrence = 30-magAmmo;
             sf::Vector2f position;
             sf::Color color = sf::Color::Blue;
 
