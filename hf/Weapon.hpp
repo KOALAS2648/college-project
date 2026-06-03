@@ -10,6 +10,7 @@
 
 namespace W
 {
+	// defines the rifle class, probaly going to be the only weapon in the game.
     class Rifle
     {
         public:
@@ -25,7 +26,7 @@ namespace W
             int diffrence = 30-magAmmo;
             sf::Vector2f position;
             sf::Color color = sf::Color::Blue;
-
+			// allows drawing to the screen via refrence
             void draw(sf::RenderWindow* screen)
 			{
 				
