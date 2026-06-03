@@ -8,6 +8,8 @@ namespace Bo
 {
 	class Box
 	{
+		// defines the varibles that can/might be changed throught the program.
+		// rotation needs to be changed into a private variable
 		public:
 			float x;
 			float y;
