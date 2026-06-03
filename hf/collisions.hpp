@@ -7,9 +7,19 @@
 using namespace PlayerCode;
 using namespace std;
 using namespace B;
+using namespace Bo;
 
 namespace Collision
 {
+	float getDistance(Player* p, BulletClass* b)
+	{
+		BulletClass &other = *b;
+		Player &self = *p;
+		float diffrencex = pow((other.x-self.x), 2);
+        float diffrencey = pow((other.y-self.y), 2);
+        float dSquared = diffrencex + diffrencey;
+        return sqrt(dSquared);
+	}
 	bool isPlayerOutside(Player* obj, sf::RenderWindow* s)
 	{
 		sf::RenderWindow &screen = *s;
@@ -53,8 +63,16 @@ namespace Collision
 		}
 		return false;
 	}
-	/*
-	bool isTouching(Player* obj, target* obj2)
+	bool bulletPlayerCollision(Player* player, BulletClass* bullet)
+	{
+		if (getDistance(player, bullet) <= player->raduis)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool isPlayerTouchingBox(Player* obj, Box* obj2)
 	{
 			float angle = -obj2->rotation * 3.14159265f / 180.f;
 			float cosA = cos(angle);
@@ -70,5 +88,23 @@ namespace Collision
 			float distanceX = localX - closestX;
 			float distanceY = localY - closestY;
 			return distanceX * distanceX + distanceY * distanceY <= obj->raduis * obj->raduis;
-	}*/
+	}
+
+	bool isBulletTouchingBox(BulletClass* obj, Box* obj2)
+	{
+			float angle = -obj2->rotation * 3.14159265f / 180.f;
+			float cosA = cos(angle);
+			float sinA = sin(angle);
+			float dx = obj->x - obj2->x;
+			float dy = obj->y - obj2->y;
+			float localX = dx * cosA - dy * sinA;
+			float localY = dx * sinA + dy * cosA;
+			float halfWidth = obj2->width / 2.f;
+			float halfHeight = obj2->height / 2.f;
+			float closestX = clamp(localX, -halfWidth, halfWidth);
+			float closestY = clamp(localY, -halfHeight, halfHeight);
+			float distanceX = localX - closestX;
+			float distanceY = localY - closestY;
+			return distanceX * distanceX + distanceY * distanceY <= obj->raduis * obj->raduis;
+	}
 }

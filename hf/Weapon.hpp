@@ -3,10 +3,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include <sstream>
-#include <vector>
-#include <SFML/Audio.hpp>
-#include <random>
+#include "P.hpp"
 
 namespace W
 {
@@ -24,21 +21,21 @@ namespace W
             float height = 10;
             float width =40;
             int diffrence = 30-magAmmo;
+            Player* attachedPlayer;
             sf::Vector2f position;
             sf::Color color = sf::Color::Blue;
 			// allows drawing to the screen via refrence
             void draw(sf::RenderWindow* screen)
 			{
-				
-				sf::RectangleShape square(sf::Vector2f(width, height));
-				square.setPosition(x, y);
-				square.setOrigin(0, height/2.f);
-				square.setFillColor(color);
-				square.rotate(rotation);
-				screen->draw(square);
-                position = {x,y};
-				
-				
+				if (attachedPlayer->alive){
+                    sf::RectangleShape square(sf::Vector2f(width, height));
+				    square.setPosition(x, y);
+				    square.setOrigin(0, height/2.f);
+				    square.setFillColor(color);
+				    square.rotate(rotation);
+				    screen->draw(square);
+                    position = {x,y};
+                }
 			}
     };
 }

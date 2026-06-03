@@ -13,8 +13,8 @@ namespace Bo
 		public:
 			float x;
 			float y;
-			float width = 10;
-			float height = 10;
+			float width = 100;
+			float height = 75;
 			float screenDist;
 			float rotation = 0.0;
 			sf::Vector2f position = {x,y};

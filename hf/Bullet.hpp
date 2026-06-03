@@ -12,6 +12,7 @@ namespace B
             float x=0;
             float y=0;
             float raduis = 10;
+            int damage= 10;
 			// which angle to shoot at
             float moveAngle;
             int speed = 15;

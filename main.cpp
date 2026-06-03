@@ -7,7 +7,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
-#include <SFML/Audio.hpp>
+//#include <SFML/Audio.hpp>
 #include <random>
 #include <algorithm>
 #include "hf/P.hpp"
@@ -44,10 +44,31 @@ int main()
     Rifle* riflePointer = &r1;
     r1.x =0;
     r1.y =0;
+
     float dx;
     float dy;
-    float angle;
+    float angleP1;
+    float angleP2;
     int speed=5;
+
+    Player second;
+    second.x =300;
+    second.y = 150;
+    Player* secondPointer = &second;
+
+    Rifle r2;
+    Rifle* f2Pointer = &r2;
+    r2.x = secondPointer->x;
+    r2.y = secondPointer->y;
+
+    r1.attachedPlayer = firstPointer;
+    r2.attachedPlayer = secondPointer;
+    
+    Box box1;
+    box1.x = 100;
+    box1.y = 200;
+    
+
     vector<BulletClass> bullets = {};
     BulletClass b1;
     b1.x = 400;
@@ -55,8 +76,10 @@ int main()
     b1.moveAngle = 45;
     BulletClass tempBullet;
     BulletClass* tempBulletPointer;
+
     bool c;
     bool flag;
+    
     while(window.isOpen())
     {
         sf::Event event;
@@ -69,19 +92,19 @@ int main()
             if(event.type == sf::Event::MouseButtonPressed && riflePointer->magAmmo > 0)
             {
                 
-                tempBullet.x = first.x-(r1.height*sin(angle));
-                tempBullet.y = first.y-(r1.height*cos(angle));
+                tempBullet.x = first.x+((first.raduis+r1.width)*cos(angleP1));
+                tempBullet.y = first.y+((first.raduis+r1.height)*sin(angleP1));
                 //cout << angle << endl;
-                tempBullet.moveAngle = angle;
+                tempBullet.moveAngle = angleP1;
                 bullets.push_back(tempBullet);
-                riflePointer->magAmmo -= 1;
-                riflePointer->diffrence = riflePointer->ammo-riflePointer->magAmmo;
+                /*riflePointer->magAmmo -= 1;
+                riflePointer->diffrence = riflePointer->ammo-riflePointer->magAmmo;*/
                 flag = true;
             }
             if (event.type == sf::Event::MouseButtonReleased && flag)
             {
                 flag = false;
-                cout << riflePointer->magAmmo << endl;
+                //cout << riflePointer->magAmmo << endl;
             }
             if(event.type == sf::Event::KeyPressed)
             {
@@ -93,7 +116,8 @@ int main()
                 }
             }
 		}
-        bool c = isPlayerOutside(firstPointer, windowPointer);
+        
+        c = isPlayerOutside(firstPointer, windowPointer) && firstPointer->alive;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !c)
 		{
 			first.y -= speed;
@@ -114,11 +138,20 @@ int main()
 			first.x+= speed;
 		}
         window.clear();
+        // where all the bullet logic is checked
         for(BulletClass &bullet: bullets)
         {
             if(bullet.show)
             {
                 tempBulletPointer = &bullet;
+                if(bulletPlayerCollision(firstPointer, tempBulletPointer)&& firstPointer->alive)
+                {
+                    firstPointer-> health-=10;
+                }
+                if (bulletPlayerCollision(secondPointer, tempBulletPointer)&&secondPointer->alive)
+                {
+                    secondPointer->health = secondPointer->health-10;
+                }
                 bullet.draw(windowPointer);
                 bullet.move();
                 bullet.show = !isBulletOutside(tempBulletPointer, windowPointer);
@@ -126,16 +159,23 @@ int main()
             
         }
         b1.draw(windowPointer);
+        r2.draw(windowPointer);
         r1.draw(windowPointer);
         first.draw(windowPointer);
+        second.draw(windowPointer);
+        box1.draw(windowPointer);
         r1.x = first.x;
         r1.y = first.y;
         mousePos = sf::Mouse::getPosition(window);
         dx = -(first.x-mousePos.x);
         dy = -(first.y-mousePos.y);
-        angle = atan2(dy, dx);
-        r1.rotation = angle* 180/3.14159;
+        angleP1 = atan2(dy, dx);
+        r1.rotation = angleP1* 180/3.14159;
         
+        dx = -(second.x-mousePos.x);
+        dy = -(second.y-mousePos.y);
+        angleP2 = atan2(dy, dx);
+        r2.rotation = angleP2* 180/3.14159;
         
         window.display();
     }
