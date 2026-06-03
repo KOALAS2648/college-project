@@ -9,6 +9,7 @@
 
 namespace PlayerCode
 {
+	// contains the drawing and defines the varibles of where to draw the player
     class Player
     {
         public:
