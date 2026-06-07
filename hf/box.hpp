@@ -16,15 +16,17 @@ namespace Bo
 			float width = 100;
 			float height = 75;
 			float screenDist;
-			float rotation = 0.0;
+			sf::Angle rotation;
 			sf::Vector2f position = {x,y};
+			sf::Vector2f dimensions = {width, height};
 			sf::Color color = sf::Color::White;
 			void draw(sf::RenderWindow* screen)
 			{
 				
 				sf::RectangleShape square(sf::Vector2f(width, height));
-				square.setPosition(x, y);
-				square.setOrigin(width/2.f, height/2.f);
+				position = {x,y};
+				square.setPosition(position);
+				square.setOrigin(dimensions);
 				square.setFillColor(color);
 				square.rotate(rotation);
 				screen->draw(square);

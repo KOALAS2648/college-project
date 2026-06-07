@@ -17,7 +17,7 @@ namespace W
 
             const int MAXAMMO = 50;
             int magAmmo = 30;
-            float rotation;
+            sf::Angle rotation;
             float height = 10;
             float width =40;
             int diffrence = 30-magAmmo;
@@ -29,8 +29,8 @@ namespace W
 			{
 				if (attachedPlayer->alive){
                     sf::RectangleShape square(sf::Vector2f(width, height));
-				    square.setPosition(x, y);
-				    square.setOrigin(0, height/2.f);
+				    square.setPosition(position);
+				    square.setOrigin({0, height/2.f});
 				    square.setFillColor(color);
 				    square.rotate(rotation);
 				    screen->draw(square);

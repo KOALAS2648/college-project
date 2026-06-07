@@ -74,7 +74,7 @@ namespace Collision
 
 	bool isPlayerTouchingBox(Player* obj, Box* obj2)
 	{
-			float angle = -obj2->rotation * 3.14159265f / 180.f;
+			float angle = -obj2->rotation.asRadians() * 3.14159265f / 180.f;
 			float cosA = cos(angle);
 			float sinA = sin(angle);
 			float dx = obj->x - obj2->x;
@@ -92,7 +92,7 @@ namespace Collision
 
 	bool isBulletTouchingBox(BulletClass* obj, Box* obj2)
 	{
-			float angle = -obj2->rotation * 3.14159265f / 180.f;
+			float angle = -obj2->rotation.asRadians() * 3.14159265f / 180.f;
 			float cosA = cos(angle);
 			float sinA = sin(angle);
 			float dx = obj->x - obj2->x;

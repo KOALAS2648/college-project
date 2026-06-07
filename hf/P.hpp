@@ -27,8 +27,8 @@ namespace PlayerCode
                 sf::RenderWindow &screen = *window;
                 sf::CircleShape circle1(raduis);
                 circle1.setFillColor(color);
-                circle1.setOrigin(raduis, raduis);
-                circle1.setPosition(x,y);
+                circle1.setOrigin({raduis, raduis});
+                circle1.setPosition({x,y});
                 if(health > 0)
                 {
                     screen.draw(circle1);

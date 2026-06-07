@@ -14,7 +14,7 @@ namespace B
             float raduis = 10;
             int damage= 10;
 			// which angle to shoot at
-            float moveAngle;
+            sf::Angle moveAngle;
             int speed = 15;
 			// whevether to render the movement/dislay the bullet
             bool show=true;
@@ -26,17 +26,17 @@ namespace B
                 
                 sf::CircleShape circle1(raduis);
                 circle1.setFillColor(color);
-                circle1.setOrigin(raduis, raduis);
+                circle1.setOrigin({raduis, raduis});
                 
-                circle1.setPosition(x,y);
+                circle1.setPosition({x,y});
                 window->draw(circle1);
 				position = {x, y};
             }
 			// defines how the bullet moves based on where the player is looking.
             void move()
             {
-                x += speed*cos(moveAngle);
-                y += speed*sin(moveAngle);
+                x += speed*cos(moveAngle.asRadians());
+                y += speed*sin(moveAngle.asRadians());
                     
             }
     };
