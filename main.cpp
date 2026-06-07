@@ -1,6 +1,10 @@
 //g++ main.cpp -o app -IC:/msys64/ucrt64/include -LC:/msys64/ucrt64/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 // ./app.exe
 
+
+// laptop compile command: g++ main.cpp -std=c++17 -o ./app.exegit  -IC:/msys64/ucrt64/include -LC:/msys64/ucrt64/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+// ./app.exe
+
 // this file was made to make swure all the logic and code I have written will work 
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -95,8 +99,8 @@ int main()
                 if(mousePressed->button == sf::Mouse::Button::Left && riflePointer->magAmmo > 0)
                 {
                 
-                    tempBullet.x = first.x+((first.raduis+r1.width)*cos(angleP1.asDegrees()));
-                    tempBullet.y = first.y+((first.raduis+r1.height)*sin(angleP1.asDegrees()));
+                    tempBullet.x = first.x+((first.raduis+r1.width)*cos(angleP1.asRadians()));
+                    tempBullet.y = first.y+((first.raduis+r1.height)*sin(angleP1.asRadians()));
                     //cout << angle << endl;
                     tempBullet.moveAngle = angleP1;
                     bullets.push_back(tempBullet);
@@ -124,29 +128,34 @@ int main()
         
         c = isPlayerOutside(firstPointer, windowPointer) && firstPointer->alive;
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && !c)
-            {
-                first.y -= speed;
-            }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && !c)
+        {
+            first.y -= speed;
+        }
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && !c)
-            {
-                first.y+= speed;
-            }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && !c)
+        {
+            first.y+= speed;
+        }
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && !c)
-            {
-                first.x-= speed;
-            }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && !c)
+        {
+            first.x-= speed;
+        }
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && !c)
-            {
-                first.x+= speed;
-            }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && !c)
+        {
+            first.x+= speed;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+        {
+            box1.x += speed;
+        }
         window.clear();
         // where all the bullet logic is checked
         for(BulletClass &bullet: bullets)
         {
+            // if the bullet is not needed to be shown don't display and waste calulation time.
             if(bullet.show)
             {
                 tempBulletPointer = &bullet;
@@ -164,23 +173,27 @@ int main()
             }
             
         }
+        // draw the players and the rifles.
         b1.draw(windowPointer);
         r2.draw(windowPointer);
         r1.draw(windowPointer);
         first.draw(windowPointer);
         second.draw(windowPointer);
         box1.draw(windowPointer);
+
+        // set the rifle positions to the first players x, y
         r1.x = first.x;
         r1.y = first.y;
+        // calculates the rotation based on the mouse position for both of the weaponss
         mousePos = sf::Mouse::getPosition(window);
         dx = -(first.x-mousePos.x);
         dy = -(first.y-mousePos.y);
-        angleP1 = sf::radians(atan2(dy, dx));
+        angleP1 = sf::degrees(atan2(dy, dx));
         r1.rotation = angleP1* 180/3.14159;
         
         dx = -(second.x-mousePos.x);
         dy = -(second.y-mousePos.y);
-        angleP2 = sf::radians(atan2(dy, dx));
+        angleP2 = sf::degrees(atan2(dy, dx));
         r2.rotation = angleP2* 180/3.14159;
         
         window.display();
