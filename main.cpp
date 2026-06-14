@@ -96,11 +96,11 @@ int main()
 			}
             if(const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>())
             {
-                if(mousePressed->button == sf::Mouse::Button::Left && riflePointer->magAmmo > 0)
+                if(mousePressed->button == sf::Mouse::Button::Left /*1&& /*riflePointer->magAmmo > 0*/)
                 {
                 
-                    tempBullet.x = first.x+((first.raduis+r1.width)*cos(angleP1.asRadians()));
-                    tempBullet.y = first.y+((first.raduis+r1.height)*sin(angleP1.asRadians()));
+                    tempBullet.x = first.x+(first.raduis+(r1.width*cos(angleP1.asRadians())));
+                    tempBullet.y = first.y+(first.raduis+(r1.height*sin(angleP1.asRadians())));
                     //cout << angle << endl;
                     tempBullet.moveAngle = angleP1;
                     bullets.push_back(tempBullet);
@@ -201,4 +201,3 @@ int main()
         
     return 0;
 }
-// tetsing
